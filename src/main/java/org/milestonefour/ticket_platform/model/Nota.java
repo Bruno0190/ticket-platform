@@ -2,6 +2,8 @@ package org.milestonefour.ticket_platform.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,6 +25,7 @@ public class Nota {
     @NotBlank
     private String author;
 
+    @CreationTimestamp
     private LocalDate createdAt;
 
     public Nota(){
@@ -34,7 +37,7 @@ public class Nota {
 
         return id;
     }
-    
+
     public String getText(){
 
         return text;
@@ -61,9 +64,5 @@ public class Nota {
         this.author = author;
     }
 
-    public void setCreatedAt(LocalDate createdAt){
-
-        this.createdAt = createdAt;
-    }
 
 }

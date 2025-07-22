@@ -2,6 +2,8 @@ package org.milestonefour.ticket_platform.model;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 
@@ -36,7 +37,7 @@ public class Ticket {
     private Status status;
 
     @NotNull
-    @PastOrPresent(message = "Data solo presente o passata")
+    @CreationTimestamp /*Utilizzando Hibernate posso usare questa annotazione per indicare che tale attributo debba impostarsi automaticamente */
     private LocalDate createdAt;
 
     /*costruttore vuoto necessario standard JPA */
@@ -86,10 +87,7 @@ public class Ticket {
         this.status = status;
     }
 
-    public void setCreatedAt(LocalDate createdAt){
-
-        this.createdAt = createdAt;
-    }
+    /*Il setter di createdAt non c'è perchè non la impostiamo manualmente ma automaticamente con hibernate */
 }
 
 
