@@ -5,12 +5,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Operatore {
 
+    /*Attributi */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,6 +27,13 @@ public class Operatore {
     @NotNull
     private Boolean available;
 
+    /*Relazioni con altre entità */
+    @OneToMany(mappedBy = "operator")
+    private List<Ticket> tickets;
+
+
+
+    /*Costruttore vuoto, standard JPA */
     public Operatore(){
 
     }
@@ -49,6 +59,11 @@ public class Operatore {
         return available;
     }
 
+    public List<Ticket> getTickets(){
+
+        return tickets;
+    }
+
 
 
     /*I setter */
@@ -65,5 +80,10 @@ public class Operatore {
     public void setAvailable(Boolean available){
 
         this.available = available;
+    }
+
+    public void setTickets(List<Ticket> tickets){
+
+        this.tickets = tickets;
     }
 }

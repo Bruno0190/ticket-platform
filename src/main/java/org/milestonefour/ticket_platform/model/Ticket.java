@@ -10,15 +10,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.util.List;
 
 
 
 @Entity
 public class Ticket {
 
+    /*Attributi */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,6 +44,19 @@ public class Ticket {
     @NotNull
     @CreationTimestamp /*Utilizzando Hibernate posso usare questa annotazione per indicare che tale attributo debba impostarsi automaticamente */
     private LocalDate createdAt;
+
+    /*Relazioni con altre entità */
+    @ManyToOne
+    @JoinColumn(name="operator_id", nullable = false)
+    private Operatore operator;
+
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable = false)
+    private Categoria category;
+
+    @OneToMany(mappedBy = "ticket")
+    private List<Nota> notes;
+    
 
     /*costruttore vuoto necessario standard JPA */
     public Ticket(){
@@ -71,6 +89,21 @@ public class Ticket {
         return createdAt;
     }
 
+    public Operatore getOperator(){
+
+        return operator;
+    }
+
+    public Categoria getCategory(){
+
+        return category;
+    }
+
+    public List<Nota> getNotes(){
+
+        return notes;
+    }
+
     /*I setter */
     public void setTitle(String title){
 
@@ -88,6 +121,21 @@ public class Ticket {
     }
 
     /*Il setter di createdAt non c'è perchè non la impostiamo manualmente ma automaticamente con hibernate */
+
+    public void setOperator(Operatore operator){
+
+        this.operator = operator;
+    }
+
+    public void setCategory(Categoria category){
+
+        this.category = category;
+    }
+
+    public void setNotes(List<Nota> notes){
+
+        this.notes = notes;
+    }
 }
 
 

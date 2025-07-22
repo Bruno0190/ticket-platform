@@ -8,12 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Nota {
 
+    /*Attributi */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,6 +31,12 @@ public class Nota {
     @CreationTimestamp
     private LocalDate createdAt;
 
+    /*Relazioni con altre entità */
+    @ManyToOne
+    @JoinColumn(name="ticket_id", nullable=false)
+    private Ticket ticket;
+
+    /*costruttore vuoto necessario standard JPA */
     public Nota(){
 
     }
@@ -53,6 +62,13 @@ public class Nota {
         return createdAt;
     }
 
+    public Ticket getTicket(){
+
+        return ticket;
+    }
+
+
+
     /*I setter */
     public void setText(String text){
 
@@ -62,6 +78,11 @@ public class Nota {
     public void setAuthor(String author){
 
         this.author = author;
+    }
+
+    public void setTicket(Ticket ticket){
+
+        this.ticket = ticket;
     }
 
 
