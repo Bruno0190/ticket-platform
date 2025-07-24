@@ -15,13 +15,14 @@
         <h1>Ticket List</h1>
 
         <table>
-            <tr>
-                <th>Operator</th>
-                <th>Category</th>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
+            <tr th:each="tick : ${tickets}">
+                <td th:text="${tick.id}"></td>
+                <td th:text="${tick.title}"></td>
+                <td th:text="${tick.description}"></td>
+                <td th:text="${tick.status}"></td>
+                <td th:text="${tick.createdAt}"></td>
+                <td th:text="${tick.operator.name}"></td>
+                <td th:text="${tick.category.name}"></td>
             </tr>
         </table>
 

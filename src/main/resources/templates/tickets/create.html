@@ -11,26 +11,38 @@ k<!DOCTYPE html>
 <body>
     <div class="container mt-5">
         <!-- form -->
-        <form action="#" id="ticket-form" method="post">
+        <form th:action="@{/tickets/create}" id="ticket-form" method="post" th:object="${ticket}">
             <!-- campo title -->
              <div class="col-4">
                 <label for="title" class="form-label">Write a title</label>
-                <input id="title" name="title" class="form-control text-center" type="text">
+                <input type="text" th:field="*{title}" class="form-control text-center">
              </div>
 
             <!-- campo description -->
              <div class="col-4">
                 <label for="description" class="form-label">Please explain your issue</label>
-                <textarea id="description" name="description"  class="form-control text-center" type="text" rows="4"></textarea>
+                <textarea type="text" th:field="*{description}"  class="form-control text-center"  rows="4"></textarea>
              </div>
+
             <!-- campo status -->
              <div class="col-4">
                 <label for="status" class="form-label">Status</label>
-                <select id="status" name="status" class="form-select">
-                    <option value="active">active</option>
-                    <option value="no_active">no_active</option>
+                <select th:field="*{status}" class="form-select">
+                    <option th:value="active" th:text="Active"></option>
+                    <option th:value="no_active" th:text="No Active"></option>
                 </select>
              </div>
+
+             <!-- campo categoria -->
+             <div class="col-4">
+                <label for="category" class="form-label">Category</label>
+                <select th:field="*{category}" class="form-select">
+                    <option th:each="cat : ${categorie}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                </select>
+             </div>
+
+             <!-- Submit -->
+             <button type="submit" class="btn btn-secondary">Save Ticket</button>
         </form>
     </div>
     

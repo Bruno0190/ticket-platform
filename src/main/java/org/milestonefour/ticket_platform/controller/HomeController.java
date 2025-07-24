@@ -6,17 +6,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 
 
-
-
 /*In questo Controller riferito alla Home page, diamo annotazione che l'intera classe gestisca URL che iniziano da "/" */
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
-    /*Il metodo qui subito sotto deve partire da "/" quindi non occorre specificare altro nell'argomento */
     @GetMapping("")
-    public String index() {
-        return "index";
+    public String home() {
+        return "index";  // il file templates/index.html
+    }
+
+    @GetMapping("/tickets")
+    public String indexTicket() {
+        return "tickets/index";
+    }
+
+    @GetMapping("/categorie")
+    public String indexCategory() {
+        return "categorie/index";
+    }
+
+    @GetMapping("/operatori")
+    public String indexOperators() {
+        return "operatori/index";
     }
     
 
