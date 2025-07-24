@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.milestonefour.ticket_platform.model.Categoria;
-import org.milestonefour.ticket_platform.model.Operatore;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.milestonefour.ticket_platform.model.Ticket;
 import org.milestonefour.ticket_platform.repository.CategoriaRepository;
+import org.milestonefour.ticket_platform.repository.NotaRepository;
 import org.milestonefour.ticket_platform.repository.OperatoreRepository;
 import org.milestonefour.ticket_platform.repository.TicketRepository;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/tickets")
@@ -27,6 +29,8 @@ public class TicketController {
     private OperatoreRepository operatoreRepository;
     @Autowired
     private CategoriaRepository categoriaRepository;
+    @Autowired
+    private NotaRepository notaRepository;
 
 
     @GetMapping("")
@@ -62,5 +66,40 @@ public class TicketController {
         /*stessa cosa che scrivere return "tickets/create"*/
         return "redirect:/tickets";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model){
+        /*Sostituisco get() subito dopo findById(id) con orElseThrow() così in caso di errore lancia un eccezione */
+        model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
+        model.addAttribute("categorie", categoriaRepository.findAll());
+        model.addAttribute("operatori", operatoreRepository.findAll());
+
+        return "/tickets/edit";
+    }
+
+     @PostMapping("/edit/{id}")
+     public String update(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult bindingResult, Model model){
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("categorie", categoriaRepository.findAll());
+            model.addAttribute("operatori", operatoreRepository.findAll());
+            return "/tickets/edit";
+        }
+
+        ticketRepository.save(ticket);
+        return "redirect:/tickets";
+     }
+
+     @GetMapping("/show/{id}")
+     public String show(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
+        model.addAttribute("categorie", categoriaRepository.findAll());
+        model.addAttribute("operatori", operatoreRepository.findAll());
+        model.addAttribute("note", notaRepository.findAllByTicketId(id));
+
+
+         return "/tickets/show";
+     }
+     
 
 }

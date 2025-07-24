@@ -13,13 +13,9 @@ public class HomeController {
 
     @GetMapping("")
     public String home() {
-        return "index";  // il file templates/index.html
+        return "index";
     }
 
-    @GetMapping("/tickets")
-    public String indexTicket() {
-        return "tickets/index";
-    }
 
     @GetMapping("/categorie")
     public String indexCategory() {
