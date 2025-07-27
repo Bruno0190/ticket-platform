@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.milestonefour.ticket_platform.model.Ticket;
+import org.milestonefour.ticket_platform.model.Nota;
 import org.milestonefour.ticket_platform.repository.CategoriaRepository;
 import org.milestonefour.ticket_platform.repository.NotaRepository;
 import org.milestonefour.ticket_platform.repository.OperatoreRepository;
 import org.milestonefour.ticket_platform.repository.TicketRepository;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @Controller
@@ -63,7 +64,7 @@ public class TicketController {
         }
 
         ticketRepository.save(ticket);
-        /*stessa cosa che scrivere return "tickets/create"*/
+        /*Con redirect inviamo una nuova richiesta Get all'URL /tickets. Se scrolliamo in alto noi avevamo già un GetMapping("") che era subordinato a RequestMapping("/tickets") e nel cui metodo ci ritornata return "/tickets/index"*/
         return "redirect:/tickets";
     }
 
@@ -91,15 +92,29 @@ public class TicketController {
      }
 
      @GetMapping("/show/{id}")
-     public String show(@PathVariable("id") Long id, Model model) {
+     public String addNote(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
         model.addAttribute("categorie", categoriaRepository.findAll());
         model.addAttribute("operatori", operatoreRepository.findAll());
         model.addAttribute("note", notaRepository.findAllByTicketId(id));
-
+        model.addAttribute("nota", new Nota());
 
          return "/tickets/show";
      }
+
+     @PostMapping("/show/{id}/note")
+     public String addNote(@PathVariable("id") Long id, @ModelAttribute("nota") Nota nota, BindingResult bindingResult) {
+        
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+
+        nota.setTicket(ticket);
+        nota.setAuthor("admin");
+
+        notaRepository.save(nota);
+         
+         return "redirect:/tickets/show/" + id;
+     }
+     
      
 
 }

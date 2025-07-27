@@ -26,13 +26,18 @@
     <h2>Notes</h2>
     <div>
         <ul>
-            <li th:each="nota : ${note}"></li>
+            <li th:each="nota : ${note}">                
                 <span th:text="${nota.author}"></span> - 
                 <span th:text="${nota.createdAt}"></span>:
                 <p th:text="${nota.text}"></p>
-        </ul>
+            </li>
 
-        <form th:action=""></form>
+        </ul>
+              
+        <form th:action="@{/tickets/show/{id}/note(id=$ticket.id)}" method = "post" th:object="${nota}">
+            <p th:field="*{text}"></p>
+            <button type="submit" class="btn btn-secondary">Save Note</button>
+        </form>
     </div>
     
 </body>
