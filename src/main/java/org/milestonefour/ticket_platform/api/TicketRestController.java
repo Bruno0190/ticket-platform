@@ -13,8 +13,6 @@ import org.milestonefour.ticket_platform.model.Ticket;
 
 
 
-
-
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketRestController {
