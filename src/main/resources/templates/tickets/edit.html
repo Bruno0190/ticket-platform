@@ -11,8 +11,7 @@ k<!DOCTYPE html>
 <body>
     <div class="container mt-5">
         <!-- form. ATTENZIONE al tipo di rotta dinamica inserita nel form. Con @ ovviamente si indicano sempre delle rotte in thymeleaf, ma abbiamo una variabile (infatti tra parentesi graffe) che è id ed è subito specificata con il valore di ticket.id -->
-        <form th:action="@{/tickets/edit/{id}(id=${ticket.id})}"
- id="ticket-form" method="post" th:object="${ticket}">
+        <form th:action="@{/tickets/edit/{id}(id=${ticket.id})}" id="ticket-form" method="post" th:object="${ticket}">
             <!-- campo title -->
              <div class="col-4">
                 <label for="title" class="form-label">Write a title</label>
