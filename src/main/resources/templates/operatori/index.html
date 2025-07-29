@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf e successivamente quello specialistico per security -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,28 @@
     <title>Index Operatore</title>
 </head>
 <body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
     <h1>Page Operator</h1>
+
+    <span th:text="${operatore.name}"></span>
+    <span th:text="${operatore.statoOperatore}"></span>
+    <ol>
+        <li th:each="tick : ${operatore.tickets}" th:text="${tick.title}"></li>
+    </ol>
+
+
+    <form action="@{/profilo}" id="operatore-form" method="post" th:object="${operatore}">
+        <input type="hidden" th:field="*{id}" />
+
+        <button th:unless ="${errore}" type="submit">Disattiva</button>
+        <p th:if="${errore}" th:text="${errore}" class="text-danger"></p>
+
+    </form>
+
+    <!-- Footer -->
+     <div th:replace="fragments/footer :: footer"></div>
     
 </body>
 </html>

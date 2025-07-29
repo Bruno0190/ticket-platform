@@ -1,6 +1,6 @@
 k<!DOCTYPE html>
 <!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,9 @@ k<!DOCTYPE html>
     <title>Create Ticket</title>
 </head>
 <body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    
     <div class="container mt-5">
         <!-- form -->
         <form th:action="@{/tickets/create}" id="ticket-form" method="post" th:object="${ticket}">
@@ -45,6 +48,8 @@ k<!DOCTYPE html>
              <button type="submit" class="btn btn-secondary">Save Ticket</button>
         </form>
     </div>
-    
+
+    <!-- Footer -->
+     <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

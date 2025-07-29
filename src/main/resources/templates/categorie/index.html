@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf e successivamente quello specialistico per security -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +11,12 @@
     <title>Index Categoria</title>
 </head>
 <body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    
     <h1>page Category</h1>
     
+    <!-- Footer -->
+     <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

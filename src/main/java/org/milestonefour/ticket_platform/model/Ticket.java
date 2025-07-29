@@ -35,8 +35,8 @@ public class Ticket {
     @Size(max = 100, message = "Max 100 caratteri")
     private String description;
 
-    /*Per lo stato ho utilizzato la classe enum che mi consente di dare solo specifici valori a quell'attributo che poi tipizzo come Status. L'annotazione Enum(Enum.Type.STRING) serve a dire che nel database vogliamo leggere effettivamente come stringhe active o no_active */
-    public enum Status{active, no_active};
+    /*Per lo stato ho utilizzato la classe enum che mi consente di dare solo specifici valori a quell'attributo che poi tipizzo come Status. L'annotazione Enum(Enum.Type.STRING) serve a dire che nel database vogliamo leggere effettivamente come stringhe DA_FARE, IN_CORSO, COMPLETATO */
+    public enum Status{DA_FARE, IN_CORSO, COMPLETATO};
     @Enumerated(EnumType.STRING)
     @NotNull
     private Status status;

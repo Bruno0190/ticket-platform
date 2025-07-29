@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf e successivamente quello specialistico per security -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,9 @@
     <title>Home - Ticket Platform</title>
 </head>
 <body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
     <div class="container mt-5">
         <h1>Welcome</h1>
         <h3>Choose one of the following options</h3>
@@ -22,6 +25,8 @@
         </ul>
     </div>
 
+    <!-- Footer -->
+     <div th:replace="fragments/footer :: footer"></div>
 
     
 </body>

@@ -1,6 +1,6 @@
 k<!DOCTYPE html>
-<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf e successivamente quello specialistico per security -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,9 @@ k<!DOCTYPE html>
     <title th:text="Edit Ticket n.'+${ticket.id}"></title>
 </head>
 <body>
+    <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    
     <div class="container mt-5">
         <!-- form. ATTENZIONE al tipo di rotta dinamica inserita nel form. Con @ ovviamente si indicano sempre delle rotte in thymeleaf, ma abbiamo una variabile (infatti tra parentesi graffe) che è id ed è subito specificata con il valore di ticket.id -->
         <form th:action="@{/tickets/edit/{id}(id=${ticket.id})}" id="ticket-form" method="post" th:object="${ticket}">
@@ -45,6 +48,8 @@ k<!DOCTYPE html>
              <button type="submit" class="btn btn-secondary">Update Ticket</button>
         </form>
     </div>
-    
+
+    <!-- Footer -->
+     <div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

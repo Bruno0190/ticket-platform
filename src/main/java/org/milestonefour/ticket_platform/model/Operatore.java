@@ -2,6 +2,8 @@ package org.milestonefour.ticket_platform.model;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,6 +25,12 @@ public class Operatore {
 
     @NotBlank(message = "e-mail obbligatoria")
     private String email;
+
+    public enum StatoOperatore { ACTIVE, NO_ACTIVE }
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private StatoOperatore statoOperatore;
+
 
     @NotNull
     private Boolean available;
@@ -54,9 +62,9 @@ public class Operatore {
         return email;
     }
 
-    public Boolean getAvailable(){
-
-        return available;
+    public StatoOperatore getStatoOperatore(){
+        
+        return statoOperatore;
     }
 
     public List<Ticket> getTickets(){
@@ -77,9 +85,9 @@ public class Operatore {
         this.email = email;
     }
 
-    public void setAvailable(Boolean available){
+    public void setStatoOperatore(StatoOperatore statoOperatore){
 
-        this.available = available;
+        this.statoOperatore = statoOperatore;
     }
 
     public void setTickets(List<Ticket> tickets){
