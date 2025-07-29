@@ -21,15 +21,15 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     /*Il metodo seguente è quello che Spring chiama automaticamente quando si tenta l'accesso. Infatti il parametro è un username di oggetto User e se esiste viene ritornato un oggetto DatabaseUserDetails */
     @Override
     public UserDetails loadUserByUsername(String username)
-        throws UsernameNotFoundException {
-            /*Optional è una collection che potrebbe rivelarsi vuota */
-            Optional<User> user = userRepository.findByUsername(username);
+    throws UsernameNotFoundException {
+        /*Optional è una collection che potrebbe rivelarsi vuota */
+        Optional<User> user = userRepository.findByUsername(username);
 
-            if(user.isPresent()){
-                return new DatabaseUserDetails(user.get());
-            } else {
-                throw new UsernameNotFoundException("Username not found");
-            }
+        if(user.isPresent()){
+            return new DatabaseUserDetails(user.get());
+        } else {
+            throw new UsernameNotFoundException("Username not found");
         }
+    }
 
 }
