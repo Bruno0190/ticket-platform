@@ -46,7 +46,7 @@ public class H2DataLoader implements CommandLineRunner{
         // Utenti
         User user1 = new User();
         user1.setUsername("BobaFett");
-        user1.setPassword(passwordEncoder.encode("1423fabcdef@#"));
+        user1.setPassword(passwordEncoder.encode("1423fabcdet@#"));
         List<Role> user1ruoli = new ArrayList<>();
         user1ruoli.add(adminRole);
         user1.setRoles(user1ruoli);
