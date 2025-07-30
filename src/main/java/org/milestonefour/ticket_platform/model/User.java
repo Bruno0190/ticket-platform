@@ -9,7 +9,6 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 
@@ -29,7 +28,6 @@ public class User {
     private String username;
 
     @NotBlank(message = "password obbligatoria")
-    @Pattern(regexp = "(?i)\\d{4}[abcdefghilmnopqrstuvzwxy]{6}\\W{2}", message = "Password must contain 4 digits, 6 letters from a-z, and 2 symbols.")
     private String password;
 
     
