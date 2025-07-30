@@ -62,6 +62,11 @@ public class Operatore {
         return email;
     }
 
+    public Boolean getAvailable() {
+
+        return available;
+    }
+
     public StatoOperatore getStatoOperatore(){
         
         return statoOperatore;
@@ -83,6 +88,11 @@ public class Operatore {
     public void setEmail(String email){
 
         this.email = email;
+    }
+
+    public void setAvailable(Boolean available) {
+        
+        this.available = available;
     }
 
     public void setStatoOperatore(StatoOperatore statoOperatore){
