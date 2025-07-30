@@ -31,8 +31,9 @@ k<!DOCTYPE html>
              <div class="col-4">
                 <label for="status" class="form-label">Status</label>
                 <select th:field="*{status}" class="form-select">
-                    <option th:value="active" th:text="Active"></option>
-                    <option th:value="no_active" th:text="No Active"></option>
+                    <option th:value="DA_FARE" th:text="Da Fare"></option>
+                    <option th:value="IN_CORSO" th:text="In Corso"></option>
+                    <option th:value="COMPLETATO" th:text="Completato"></option>
                 </select>
              </div>
 

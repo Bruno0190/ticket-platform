@@ -29,7 +29,7 @@ public class DatabaseUserDetails implements UserDetails{
         authorities = new HashSet<GrantedAuthority>();
         for(Role role : user.getRoles()) {
             /*SimpleGrantedAuthority è una classe che implementa GrantedAuthority e rappresenta un singolo ruolo  */
-            authorities.add(new SimpleGrantedAuthority(role.getTitle()));
+            authorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
     }
 
