@@ -1,6 +1,7 @@
 package org.milestonefour.ticket_platform.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,13 +39,14 @@ public class User {
     };
 
     /*Relazioni con altre entità. Qui abbiamo una relazione molti a molti, per cui occorre una tabella ponte creata con JoinTable, battezzata come user_role in cui user_id e di riflesso role_id saranno i collegamenti */
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_role",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id")
-        )
+    )
     private List<Role> roles;
+
 
     /*I getter */
 
