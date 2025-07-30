@@ -46,14 +46,14 @@ public class H2DataLoader implements CommandLineRunner{
         // Utenti
         User user1 = new User();
         user1.setUsername("BobaFett");
-        user1.setPassword(passwordEncoder.encode("1423fabcdet@#"));
+        user1.setPassword(passwordEncoder.encode("1234abcdef@#"));
         List<Role> user1ruoli = new ArrayList<>();
         user1ruoli.add(adminRole);
         user1.setRoles(user1ruoli);
 
         User user2 = new User();
         user2.setUsername("LukeSkywalker");
-        user2.setPassword(passwordEncoder.encode("1234abcdef@!"));
+        user2.setPassword(passwordEncoder.encode("5678ghijkl%&"));
         List<Role> user2ruoli = new ArrayList<>();
         user2ruoli.add(operatorRole);
         user2.setRoles(user2ruoli);
