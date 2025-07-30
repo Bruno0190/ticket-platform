@@ -41,7 +41,6 @@ public class Ticket {
     @NotNull
     private Status status;
 
-    @NotNull
     @CreationTimestamp /*Utilizzando Hibernate posso usare questa annotazione per indicare che tale attributo debba impostarsi automaticamente */
     private LocalDate createdAt;
 
@@ -120,7 +119,9 @@ public class Ticket {
         this.status = status;
     }
 
-    /*Il setter di createdAt non c'è perchè non la impostiamo manualmente ma automaticamente con hibernate */
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public void setOperator(Operatore operator){
 

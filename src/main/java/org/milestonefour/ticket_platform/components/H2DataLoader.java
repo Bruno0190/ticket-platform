@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.milestonefour.ticket_platform.model.Categoria;
@@ -87,6 +88,8 @@ public class H2DataLoader implements CommandLineRunner{
         ticket1.setStatus(Status.DA_FARE);
         ticket1.setCategory(category1);
         ticket1.setOperator(operator1);
+        ticket1.setCreatedAt(LocalDate.now());
+
 
         Ticket ticket2 = new Ticket();
         ticket2.setTitle("Mensa chiusa");
@@ -94,6 +97,8 @@ public class H2DataLoader implements CommandLineRunner{
         ticket2.setStatus(Status.IN_CORSO);
         ticket2.setCategory(category2);
         ticket2.setOperator(operator2);
+        ticket2.setCreatedAt(LocalDate.now());
+
 
         // Note
         Nota nota1 = new Nota();
