@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import org.milestonefour.ticket_platform.model.Nota;
 import org.milestonefour.ticket_platform.model.Ticket;
 
 @Component
-public class H2DataLoader implements CommandLineRunner{
+public class H2DataLoader implements CommandLineRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -48,16 +49,12 @@ public class H2DataLoader implements CommandLineRunner{
         User user1 = new User();
         user1.setUsername("BobaFett");
         user1.setPassword(passwordEncoder.encode("1234abcdef@#"));
-        List<Role> user1ruoli = new ArrayList<>();
-        user1ruoli.add(adminRole);
-        user1.setRoles(user1ruoli);
+        user1.setRoles(List.of(adminRole));
 
         User user2 = new User();
         user2.setUsername("LukeSkywalker");
         user2.setPassword(passwordEncoder.encode("5678ghijkl%&"));
-        List<Role> user2ruoli = new ArrayList<>();
-        user2ruoli.add(operatorRole);
-        user2.setRoles(user2ruoli);
+        user2.setRoles(List.of(operatorRole));
 
         // Categorie
         Categoria category1 = new Categoria();
@@ -71,15 +68,13 @@ public class H2DataLoader implements CommandLineRunner{
         operator1.setName("Giacomo");
         operator1.setEmail("giacomo.leopardi@gmail.com");
         operator1.setStatoOperatore(StatoOperatore.ACTIVE);
+        operator1.setAvailable(true);
 
         Operatore operator2 = new Operatore();
         operator2.setName("Ugo");
         operator2.setEmail("ugo.foscolo@gmail.com");
         operator2.setStatoOperatore(StatoOperatore.ACTIVE);
-
-        operator1.setAvailable(true);
         operator2.setAvailable(true);
-
 
         // Ticket
         Ticket ticket1 = new Ticket();
@@ -90,7 +85,6 @@ public class H2DataLoader implements CommandLineRunner{
         ticket1.setOperator(operator1);
         ticket1.setCreatedAt(LocalDate.now());
 
-
         Ticket ticket2 = new Ticket();
         ticket2.setTitle("Mensa chiusa");
         ticket2.setDescription("La mensa non eroga pasti da 3 giorni.");
@@ -99,15 +93,14 @@ public class H2DataLoader implements CommandLineRunner{
         ticket2.setOperator(operator2);
         ticket2.setCreatedAt(LocalDate.now());
 
-
-        // Note
+        // Note (accorciate entro 50 caratteri)
         Nota nota1 = new Nota();
-        nota1.setText("Il modulo continua a non inviare i dati correttamente.");
+        nota1.setText("Modulo non invia i dati correttamente.");
         nota1.setAuthor("Giacomo Leopardi");
         nota1.setTicket(ticket1);
 
         Nota nota2 = new Nota();
-        nota2.setText("Il modulo invia dati ad indirizzi sbagliati.");
+        nota2.setText("Modulo invia dati a indirizzi errati.");
         nota2.setAuthor("Giacomo Leopardi");
         nota2.setTicket(ticket1);
 
@@ -117,11 +110,11 @@ public class H2DataLoader implements CommandLineRunner{
         nota3.setTicket(ticket2);
 
         Nota nota4 = new Nota();
-        nota4.setText("Problema risolto parzialmente, da monitorare.");
+        nota4.setText("Problema risolto parzialmente.");
         nota4.setAuthor("Ugo Foscolo");
         nota4.setTicket(ticket2);
 
-        // Salvataggio
+        // Salvataggi
         roleRepository.save(adminRole);
         roleRepository.save(operatorRole);
 
