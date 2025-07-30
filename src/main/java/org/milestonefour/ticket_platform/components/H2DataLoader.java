@@ -76,6 +76,10 @@ public class H2DataLoader implements CommandLineRunner{
         operator2.setEmail("ugo.foscolo@gmail.com");
         operator2.setStatoOperatore(StatoOperatore.ACTIVE);
 
+        operator1.setAvailable(true);
+        operator2.setAvailable(true);
+
+
         // Ticket
         Ticket ticket1 = new Ticket();
         ticket1.setTitle("Problemi modulistica");
