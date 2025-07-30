@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 import org.milestonefour.ticket_platform.model.Categoria;
 import org.milestonefour.ticket_platform.model.Operatore;
@@ -49,12 +49,16 @@ public class H2DataLoader implements CommandLineRunner {
         User user1 = new User();
         user1.setUsername("BobaFett");
         user1.setPassword(passwordEncoder.encode("1234abcdef@#"));
-        user1.setRoles(List.of(adminRole));
+        List<Role> roles1 = new ArrayList<>();
+        roles1.add(adminRole);
+        user1.setRoles(roles1);
 
         User user2 = new User();
         user2.setUsername("LukeSkywalker");
         user2.setPassword(passwordEncoder.encode("5678ghijkl%&"));
-        user2.setRoles(List.of(operatorRole));
+        List<Role> roles2 = new ArrayList<>();
+        roles2.add(operatorRole);
+        user2.setRoles(roles2);
 
         // Categorie
         Categoria category1 = new Categoria();
