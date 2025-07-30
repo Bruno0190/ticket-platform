@@ -28,7 +28,7 @@ public class Role {
     private List<User> users;
 
     /*I getter */
-    public String getTitle(){
+    public String getRole(){
         return roleTitle;
     }
 
