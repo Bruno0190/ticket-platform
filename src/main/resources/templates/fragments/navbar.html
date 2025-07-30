@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +17,17 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
           <a class="nav-link" th:href="@{/tickets}">Tickets</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/tickets/profilo}">Profilo</a>
+        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+          <a class="nav-link" th:href="@{/operatori}">Operators</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+          <a class="nav-link" th:href="@{/categorie}">Categories</a>
+        </li>
+        <li class="nav-item" sec:authorize="hasAuthority('OPERATOR')">
+          <a class="nav-link" th:href="@{/tickets/profilo}">Profilo</a>
         </li>
       </ul>
     </div>
