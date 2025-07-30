@@ -138,5 +138,11 @@ public class H2DataLoader implements CommandLineRunner {
         notaRepository.save(nota2);
         notaRepository.save(nota3);
         notaRepository.save(nota4);
+
+        System.out.println("----- UTENTI SALVATI -----");
+    for (User u : userRepository.findAll()) {
+        System.out.println(" - Username: " + u.getUsername());
+    }
+
     }
 }

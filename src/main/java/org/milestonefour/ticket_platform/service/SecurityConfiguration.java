@@ -30,6 +30,7 @@ public class SecurityConfiguration {
         )
         // Mostra form login standard di Spring
         .formLogin(Customizer.withDefaults());
+        http.authenticationProvider(authenticationProvider()); 
         
         /*Il seguente return monta l'oggetto di sopra con tutti i metodi necessari*/
         return http.build();
