@@ -17,16 +17,16 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
         </li>
-        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
           <a class="nav-link" th:href="@{/tickets}">Tickets</a>
         </li>
-        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
           <a class="nav-link" th:href="@{/operatori}">Operators</a>
         </li>
-        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+        <li class="nav-item">
           <a class="nav-link" th:href="@{/categorie}">Categories</a>
         </li>
-        <li class="nav-item" sec:authorize="hasAuthority('OPERATOR')">
+        <li class="nav-item">
           <a class="nav-link" th:href="@{/tickets/profilo}">Profilo</a>
         </li>
       </ul>

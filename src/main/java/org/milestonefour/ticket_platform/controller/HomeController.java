@@ -35,13 +35,6 @@ public class HomeController {
         return "index";
     }
 
-
-    @GetMapping("/login")
-    public String login() {
-        return "login";  // nome del template Thymeleaf login.html
-    }
-
-
     @GetMapping("/categorie")
     public String indexCategory() {
         return "categorie/index";
