@@ -44,6 +44,19 @@ public class H2DataLoader implements CommandLineRunner {
 
         Role operatorRole = new Role();
         operatorRole.setRole("OPERATOR");
+    
+        // Operatori
+        Operatore operator1 = new Operatore();
+        operator1.setName("Giacomo");
+        operator1.setEmail("giacomo.leopardi@gmail.com");
+        operator1.setStatoOperatore(StatoOperatore.ACTIVE);
+        operator1.setAvailable(true);
+
+        Operatore operator2 = new Operatore();
+        operator2.setName("Ugo");
+        operator2.setEmail("ugo.foscolo@gmail.com");
+        operator2.setStatoOperatore(StatoOperatore.ACTIVE);
+        operator2.setAvailable(true);
 
         // Utenti
         User user1 = new User();
@@ -59,6 +72,8 @@ public class H2DataLoader implements CommandLineRunner {
         List<Role> roles2 = new ArrayList<>();
         roles2.add(operatorRole);
         user2.setRoles(roles2);
+        user2.setOperatore(operator2);
+
 
         // Categorie
         Categoria category1 = new Categoria();
@@ -67,18 +82,7 @@ public class H2DataLoader implements CommandLineRunner {
         Categoria category2 = new Categoria();
         category2.setName("Problema mensa");
 
-        // Operatori
-        Operatore operator1 = new Operatore();
-        operator1.setName("Giacomo");
-        operator1.setEmail("giacomo.leopardi@gmail.com");
-        operator1.setStatoOperatore(StatoOperatore.ACTIVE);
-        operator1.setAvailable(true);
 
-        Operatore operator2 = new Operatore();
-        operator2.setName("Ugo");
-        operator2.setEmail("ugo.foscolo@gmail.com");
-        operator2.setStatoOperatore(StatoOperatore.ACTIVE);
-        operator2.setAvailable(true);
 
         // Ticket
         Ticket ticket1 = new Ticket();
@@ -121,15 +125,15 @@ public class H2DataLoader implements CommandLineRunner {
         // Salvataggi
         roleRepository.save(adminRole);
         roleRepository.save(operatorRole);
+    
+        operatoreRepository.save(operator1);
+        operatoreRepository.save(operator2);
 
         userRepository.save(user1);
         userRepository.save(user2);
 
         categoriaRepository.save(category1);
         categoriaRepository.save(category2);
-
-        operatoreRepository.save(operator1);
-        operatoreRepository.save(operator2);
 
         ticketRepository.save(ticket1);
         ticketRepository.save(ticket2);

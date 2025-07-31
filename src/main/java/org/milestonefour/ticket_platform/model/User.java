@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -16,6 +17,7 @@ import java.util.List;
 
 
 @Entity
+//user è una parola riservata in molti database SQL. Va racchiusa tra backtick (`user`), potresti avere errori tipo: Syntax error near 'user'
 @Table(name = "`user`")
 public class User {
 
@@ -47,6 +49,11 @@ public class User {
     )
     private List<Role> roles;
 
+    @OneToOne
+    @JoinColumn(name = "operatore_id")
+    private Operatore operatore;
+
+
 
     /*I getter */
 
@@ -70,6 +77,10 @@ public class User {
 
     }
 
+    public Operatore getOperatore() {
+        return operatore;
+    }
+
     /*I setter */
     public void setUsername(String username){
         this.username = username;
@@ -83,6 +94,10 @@ public class User {
     public void setRoles(List<Role> roles){
         this.roles = roles;
 
+    }
+
+    public void setOperatore(Operatore operatore) {
+        this.operatore = operatore;
     }
 
 

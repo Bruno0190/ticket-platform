@@ -45,6 +45,8 @@ public class TicketController {
     public String create(Model model){
         /*Il metodo addAttribute, attribuisce letteralmente un nome (un tag) all'oggetto che diventa così il modello di riferimento disponibile nel form HTML che ritorniamo. Così i dati inseriti nell'oggetto ne diventano le sue caratteristiche e questo viene rimandato completo al controller */
         model.addAttribute("ticket", new Ticket());
+        model.addAttribute("stati", Ticket.Status.values());
+
 
         /*Mi occorre aggiungere al form gli oggetti dalle Entity Categoria e Operatore, li recupero dalle repository */
         model.addAttribute("categorie", categoriaRepository.findAll());
@@ -113,14 +115,6 @@ public class TicketController {
     notaRepository.save(nota);
         
         return "redirect:/tickets/show/" + id;
-    }
-
-    @GetMapping
-    public String operatoriIndex(Model model) {
-        model.addAttribute("operatori", operatoreRepository.findAll());
-        return "operatori/index";
-    }
-     
-     
+    }    
 
 }

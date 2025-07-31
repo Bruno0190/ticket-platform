@@ -22,7 +22,11 @@
                 <td th:text="${tick.id}"></td>
                 <td th:text="${tick.title}"></td>
                 <td th:text="${tick.description}"></td>
-                <td th:text="${tick.status}"></td>
+                <td th:switch="${tick.status}">
+                    <span th:case="DA_FARE">Da fare</span>
+                    <span th:case="IN_CORSO">In corso</span>
+                    <span th:case="COMPLETATO">Completato</span>
+                </td>
                 <td th:text="${tick.createdAt}"></td>
                 <td th:text="${tick.operator.name}"></td>
                 <td th:text="${tick.category.name}"></td>

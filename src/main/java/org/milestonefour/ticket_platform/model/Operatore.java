@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.util.List;
@@ -39,6 +40,8 @@ public class Operatore {
     @OneToMany(mappedBy = "operator")
     private List<Ticket> tickets;
 
+    @OneToOne(mappedBy = "operatore")
+    private User user;
 
 
     /*Costruttore vuoto, standard JPA */
@@ -91,7 +94,7 @@ public class Operatore {
     }
 
     public void setAvailable(Boolean available) {
-        
+
         this.available = available;
     }
 
