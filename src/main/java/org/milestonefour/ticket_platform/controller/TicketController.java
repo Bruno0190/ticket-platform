@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.milestonefour.ticket_platform.model.Ticket;
+
+import java.security.Principal;
+
 import org.milestonefour.ticket_platform.model.Nota;
 import org.milestonefour.ticket_platform.repository.CategoriaRepository;
 import org.milestonefour.ticket_platform.repository.NotaRepository;
@@ -93,28 +96,28 @@ public class TicketController {
         return "redirect:/tickets";
      }
 
-     @GetMapping("/show/{id}")
-     public String addNote(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/show/{id}")
+    public String addNote(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
         model.addAttribute("categorie", categoriaRepository.findAll());
         model.addAttribute("operatori", operatoreRepository.findAll());
         model.addAttribute("note", notaRepository.findAllByTicketId(id));
         model.addAttribute("nota", new Nota());
 
-         return "/tickets/show";
-     }
+        return "/tickets/show";
+    }
 
     @PostMapping("/show/{id}/note")
-    public String addNote(@PathVariable("id") Long id, @ModelAttribute("nota") Nota nota, BindingResult bindingResult) {
-    
-    Ticket ticket = ticketRepository.findById(id).orElseThrow();
-
-    nota.setTicket(ticket);
-    nota.setAuthor("admin");
-
-    notaRepository.save(nota);
+    public String addNote(@PathVariable("id") Long id, @ModelAttribute("nota") Nota nota, BindingResult bindingResult, Principal principal) {
         
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+
+        nota.setTicket(ticket);
+        nota.setAuthor(principal.getName());
+
+        notaRepository.save(nota);
+
         return "redirect:/tickets/show/" + id;
-    }    
+    }
 
 }

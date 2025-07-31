@@ -21,16 +21,15 @@ public class SecurityConfiguration {
     throws Exception {
         /*http.authorizeHttpRequests è un metodo che accetta una lambda (->) che non deve contenere return al suo interno. Utilizzando lambda possiamo poi fare una catena di metodi come si vede. Le lambda sono modi brevi per scrivere metodi senza nome */
         http.authorizeHttpRequests(requests -> requests
-            // Tickets - lettura per ADMIN e OPERATOR, scrittura solo per ADMIN
+            
             .requestMatchers("/tickets", "/tickets/index", "/tickets/show/**").hasAnyAuthority("ADMIN", "OPERATOR")
             .requestMatchers("/tickets/create", "/tickets/edit/**", "/tickets/delete/**").hasAuthority("ADMIN")
-
             // Operatori e Categorie - solo per ADMIN
             .requestMatchers("/operatori", "/operatori/**").hasAuthority("ADMIN")
             .requestMatchers("/categorie", "/categorie/**").hasAuthority("ADMIN")
-
-            // Profilo
+            .requestMatchers("/profilo","/profilo/index").hasAnyAuthority("ADMIN", "OPERATOR")
             .requestMatchers("/profilo","/profilo/index").permitAll()
+            
 
             // Homepage accessibile a tutti
             .requestMatchers("/").permitAll()

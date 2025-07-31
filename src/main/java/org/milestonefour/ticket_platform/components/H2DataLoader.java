@@ -14,8 +14,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 
 import org.milestonefour.ticket_platform.model.Categoria;
@@ -74,17 +74,21 @@ public class H2DataLoader implements CommandLineRunner {
         operatoreRepository.save(operator1);
         operatoreRepository.save(operator2);
 
-        // Utenti (dopo operatori, così hanno ID)
+        // Utenti
         User user1 = new User();
         user1.setUsername("BobaFett");
         user1.setPassword(passwordEncoder.encode("1234abcdef@#"));
-        user1.setRoles(List.of(adminRole));
+        List<Role> roles1 = new ArrayList<>();
+        roles1.add(adminRole);
+        user1.setRoles(roles1);
         user1.setOperatore(operator1);
 
         User user2 = new User();
         user2.setUsername("LukeSkywalker");
         user2.setPassword(passwordEncoder.encode("5678ghijkl%&"));
-        user2.setRoles(List.of(operatorRole));
+        List<Role> roles2 = new ArrayList<>();
+        roles2.add(operatorRole);
+        user2.setRoles(roles2);
         user2.setOperatore(operator2);
 
         userRepository.save(user1);
@@ -131,13 +135,18 @@ public class H2DataLoader implements CommandLineRunner {
         nota4.setAuthor("Ugo Foscolo");
         nota4.setTicket(ticket2);
 
-        notaRepository.saveAll(List.of(nota1, nota2, nota3, nota4));
+        List<Nota> note = new ArrayList<>();
+        note.add(nota1);
+        note.add(nota2);
+        note.add(nota3);
+        note.add(nota4);
 
-        // Console di conferma
+        notaRepository.saveAll(note);
+
         System.out.println("----- UTENTI SALVATI -----");
         for (User u : userRepository.findAll()) {
             System.out.println(" - Username: " + u.getUsername());
         }
     }
-
 }
+
