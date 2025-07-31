@@ -29,8 +29,8 @@ public class SecurityConfiguration {
             .requestMatchers("/operatori", "/operatori/**").hasAuthority("ADMIN")
             .requestMatchers("/categorie", "/categorie/**").hasAuthority("ADMIN")
 
-            // Profilo - solo per OPERATOR
-            .requestMatchers("/profilo").hasAuthority("OPERATOR")
+            // Profilo
+            .requestMatchers("/profilo","/profilo/index").permitAll()
 
             // Homepage accessibile a tutti
             .requestMatchers("/").permitAll()

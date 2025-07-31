@@ -44,7 +44,20 @@ public class H2DataLoader implements CommandLineRunner {
 
         Role operatorRole = new Role();
         operatorRole.setRole("OPERATOR");
-    
+
+        roleRepository.save(adminRole);
+        roleRepository.save(operatorRole);
+
+        // Categorie
+        Categoria category1 = new Categoria();
+        category1.setName("Modulo non funzionante");
+
+        Categoria category2 = new Categoria();
+        category2.setName("Problema mensa");
+
+        categoriaRepository.save(category1);
+        categoriaRepository.save(category2);
+
         // Operatori
         Operatore operator1 = new Operatore();
         operator1.setName("Giacomo");
@@ -58,31 +71,24 @@ public class H2DataLoader implements CommandLineRunner {
         operator2.setStatoOperatore(StatoOperatore.ACTIVE);
         operator2.setAvailable(true);
 
-        // Utenti
+        operatoreRepository.save(operator1);
+        operatoreRepository.save(operator2);
+
+        // Utenti (dopo operatori, così hanno ID)
         User user1 = new User();
         user1.setUsername("BobaFett");
         user1.setPassword(passwordEncoder.encode("1234abcdef@#"));
-        List<Role> roles1 = new ArrayList<>();
-        roles1.add(adminRole);
-        user1.setRoles(roles1);
+        user1.setRoles(List.of(adminRole));
+        user1.setOperatore(operator1);
 
         User user2 = new User();
         user2.setUsername("LukeSkywalker");
         user2.setPassword(passwordEncoder.encode("5678ghijkl%&"));
-        List<Role> roles2 = new ArrayList<>();
-        roles2.add(operatorRole);
-        user2.setRoles(roles2);
+        user2.setRoles(List.of(operatorRole));
         user2.setOperatore(operator2);
 
-
-        // Categorie
-        Categoria category1 = new Categoria();
-        category1.setName("Modulo non funzionante");
-
-        Categoria category2 = new Categoria();
-        category2.setName("Problema mensa");
-
-
+        userRepository.save(user1);
+        userRepository.save(user2);
 
         // Ticket
         Ticket ticket1 = new Ticket();
@@ -101,7 +107,10 @@ public class H2DataLoader implements CommandLineRunner {
         ticket2.setOperator(operator2);
         ticket2.setCreatedAt(LocalDate.now());
 
-        // Note (accorciate entro 50 caratteri)
+        ticketRepository.save(ticket1);
+        ticketRepository.save(ticket2);
+
+        // Note
         Nota nota1 = new Nota();
         nota1.setText("Modulo non invia i dati correttamente.");
         nota1.setAuthor("Giacomo Leopardi");
@@ -122,31 +131,13 @@ public class H2DataLoader implements CommandLineRunner {
         nota4.setAuthor("Ugo Foscolo");
         nota4.setTicket(ticket2);
 
-        // Salvataggi
-        roleRepository.save(adminRole);
-        roleRepository.save(operatorRole);
-    
-        operatoreRepository.save(operator1);
-        operatoreRepository.save(operator2);
+        notaRepository.saveAll(List.of(nota1, nota2, nota3, nota4));
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-
-        categoriaRepository.save(category1);
-        categoriaRepository.save(category2);
-
-        ticketRepository.save(ticket1);
-        ticketRepository.save(ticket2);
-
-        notaRepository.save(nota1);
-        notaRepository.save(nota2);
-        notaRepository.save(nota3);
-        notaRepository.save(nota4);
-
+        // Console di conferma
         System.out.println("----- UTENTI SALVATI -----");
-    for (User u : userRepository.findAll()) {
-        System.out.println(" - Username: " + u.getUsername());
+        for (User u : userRepository.findAll()) {
+            System.out.println(" - Username: " + u.getUsername());
+        }
     }
 
-    }
 }

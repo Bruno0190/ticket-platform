@@ -7,7 +7,7 @@ import org.milestonefour.ticket_platform.model.Operatore;
 import java.util.Optional;
 import org.milestonefour.ticket_platform.repository.CategoriaRepository;
 import org.milestonefour.ticket_platform.repository.OperatoreRepository;
-import org.milestonefour.ticket_platform.repository.TicketRepository;
+import org.milestonefour.ticket_platform.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 import org.milestonefour.ticket_platform.model.Ticket.Status;
-
+import org.milestonefour.ticket_platform.model.User;
 
 /*In questo Controller riferito alla Home page, diamo annotazione che l'intera classe gestisca URL che iniziano da "/" */
 @Controller
@@ -25,11 +25,11 @@ import org.milestonefour.ticket_platform.model.Ticket.Status;
 public class HomeController {
 
     @Autowired
-    private TicketRepository ticketRepository;
-    @Autowired
     private CategoriaRepository categoriaRepository;
     @Autowired
     private OperatoreRepository operatoreRepository;
+    @Autowired
+    private UserRepository userRepository;
 
 
 
@@ -51,42 +51,49 @@ public class HomeController {
     @GetMapping("/profilo")
     public String indexOperators(Model model, Principal principal) {
         String username = principal.getName();
-        Optional<Operatore> optOperatore = operatoreRepository.findByName(username);
-        Operatore operatore = optOperatore.orElse(null); 
-        model.addAttribute("operatore", operatore);
+        Optional<User> user = userRepository.findByUsername(username);
 
-        return "operatori/index";
+        if (user.isPresent() && user.get().getOperatore() != null) {
+            Operatore operatore = user.get().getOperatore();
+            model.addAttribute("operatore", operatore);
+        } else {
+            model.addAttribute("errore", "Nessun operatore collegato a questo utente.");
+        }
+
+        return "profilo/index";
     }
+
 
     @PostMapping("/profilo")
     public String update(@ModelAttribute("operatore") Operatore operatore, Model model){
-
-        model.addAttribute("tickets", operatore.getTickets());
 
         Operatore realOperatore = operatoreRepository.findById(operatore.getId()).get();
 
         List<Ticket> tickets = realOperatore.getTickets();
 
-        for(Ticket tick : tickets){
+        boolean haTicketAttivi = false;
 
-            if (tick.getStatus() == Status.DA_FARE || tick.getStatus() == Status.IN_CORSO ){
-            model.addAttribute("errore", "Non puoi disattivarti finché hai ticket attivi.");
-            return "operatori/index";
-
-            } else {
-                realOperatore.setStatoOperatore(StatoOperatore.NO_ACTIVE);
-
-                operatoreRepository.save(realOperatore);
-                
-                model.addAttribute("operatore", realOperatore);
-                model.addAttribute("tickets", realOperatore.getTickets());
-
-                return "operatori/index";
-
+        for (Ticket tick : tickets) {
+            if (tick.getStatus() == Status.DA_FARE || tick.getStatus() == Status.IN_CORSO) {
+                haTicketAttivi = true;
+                break;
             }
         }
-        return "operatori/index";
-        
+
+        if (haTicketAttivi && operatore.getStatoOperatore() == StatoOperatore.NO_ACTIVE) {
+            model.addAttribute("operatore", realOperatore);
+            model.addAttribute("errore", "Non puoi disattivarti finché hai ticket attivi.");
+            return "profilo/index";
+        }
+
+        // Se non ha ticket attivi, salvo lo stato scelto
+        realOperatore.setStatoOperatore(operatore.getStatoOperatore());
+        operatoreRepository.save(realOperatore);
+
+        model.addAttribute("operatore", realOperatore);
+        model.addAttribute("successo", "Stato aggiornato con successo.");
+        return "profilo/index";
+  
     }
 
 }
