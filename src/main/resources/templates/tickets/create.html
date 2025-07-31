@@ -1,6 +1,6 @@
-k<!DOCTYPE html>
+<!DOCTYPE html>
 <!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +31,7 @@ k<!DOCTYPE html>
              <div class="col-4">
                 <label for="status" class="form-label">Status</label>
                 <select th:field="*{status}" class="form-select">
-                    <option th:value="DA_FARE" th:text="Da Fare"></option>
-                    <option th:value="IN_CORSO" th:text="In Corso"></option>
-                    <option th:value="COMPLETATO" th:text="Completato"></option>
+                    <option th:each="stato : ${stati}" th:value="${stato}" th:text="${stato}"></option>
                 </select>
              </div>
 

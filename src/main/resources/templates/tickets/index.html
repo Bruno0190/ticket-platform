@@ -17,21 +17,30 @@
     <div class ="container mt-5">
         <h1>Ticket List</h1>
 
-        <table>
+    <table class="table table-striped mt-4">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Titolo</th>
+                <th>Descrizione</th>
+                <th>Stato</th>
+                <th>Data</th>
+                <th>Operatore</th>
+                <th>Categoria</th>
+            </tr>
+        </thead>
+        <tbody>
             <tr th:each="tick : ${tickets}">
                 <td th:text="${tick.id}"></td>
                 <td th:text="${tick.title}"></td>
                 <td th:text="${tick.description}"></td>
-                <td th:switch="${tick.status}">
-                    <span th:case="DA_FARE">Da fare</span>
-                    <span th:case="IN_CORSO">In corso</span>
-                    <span th:case="COMPLETATO">Completato</span>
-                </td>
-                <td th:text="${tick.createdAt}"></td>
+                <td th:text="${tick.status}"></td> <!-- oppure usa lo switch con apici -->
+                <td th:text="${#temporals.format(tick.createdAt, 'dd/MM/yyyy')}"></td>
                 <td th:text="${tick.operator.name}"></td>
                 <td th:text="${tick.category.name}"></td>
             </tr>
-        </table>
+        </tbody>
+    </table>
 
        <a th:href="@{/tickets/create}" class="btn btn-primary">Add a new Ticket</a>
 
