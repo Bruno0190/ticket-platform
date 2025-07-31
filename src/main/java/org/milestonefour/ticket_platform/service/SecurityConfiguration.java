@@ -21,17 +21,27 @@ public class SecurityConfiguration {
     throws Exception {
         /*http.authorizeHttpRequests è un metodo che accetta una lambda (->) che non deve contenere return al suo interno. Utilizzando lambda possiamo poi fare una catena di metodi come si vede. Le lambda sono modi brevi per scrivere metodi senza nome */
         http.authorizeHttpRequests(requests -> requests
-            .requestMatchers("/tickets/**").hasAuthority("ADMIN")
-            .requestMatchers("/operatori/**").hasAuthority("ADMIN")
-            .requestMatchers("/categorie/**").hasAuthority("ADMIN")
+            // Tickets - lettura per ADMIN e OPERATOR, scrittura solo per ADMIN
+            .requestMatchers("/tickets", "/tickets/index", "/tickets/show/**").hasAnyAuthority("ADMIN", "OPERATOR")
+            .requestMatchers("/tickets/create", "/tickets/edit/**", "/tickets/delete/**").hasAuthority("ADMIN")
+
+            // Operatori e Categorie - solo per ADMIN
+            .requestMatchers("/operatori", "/operatori/**").hasAuthority("ADMIN")
+            .requestMatchers("/categorie", "/categorie/**").hasAuthority("ADMIN")
+
+            // Profilo - solo per OPERATOR
             .requestMatchers("/profilo").hasAuthority("OPERATOR")
-            // Tutti possono vedere la home "/"
+
+            // Homepage accessibile a tutti
             .requestMatchers("/").permitAll()
+
+            // Tutto il resto: solo utenti loggati
+            .anyRequest().authenticated()
         );
-        /* Imposto la pagina di login personalizzata. Permetto a tutti di accedere a questa pagina senza autenticazione */
-        http.formLogin(form -> form
-            .loginPage("/login")
-            .permitAll()           
+        http.formLogin(Customizer.withDefaults())  //login standard
+        .logout(logout -> logout
+            .logoutSuccessUrl("/login?logout")
+            .permitAll()
         );
 
         

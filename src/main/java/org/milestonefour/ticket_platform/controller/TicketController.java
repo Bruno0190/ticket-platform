@@ -102,18 +102,24 @@ public class TicketController {
          return "/tickets/show";
      }
 
-     @PostMapping("/show/{id}/note")
-     public String addNote(@PathVariable("id") Long id, @ModelAttribute("nota") Nota nota, BindingResult bindingResult) {
+    @PostMapping("/show/{id}/note")
+    public String addNote(@PathVariable("id") Long id, @ModelAttribute("nota") Nota nota, BindingResult bindingResult) {
+    
+    Ticket ticket = ticketRepository.findById(id).orElseThrow();
+
+    nota.setTicket(ticket);
+    nota.setAuthor("admin");
+
+    notaRepository.save(nota);
         
-        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        return "redirect:/tickets/show/" + id;
+    }
 
-        nota.setTicket(ticket);
-        nota.setAuthor("admin");
-
-        notaRepository.save(nota);
-         
-         return "redirect:/tickets/show/" + id;
-     }
+    @GetMapping
+    public String operatoriIndex(Model model) {
+        model.addAttribute("operatori", operatoreRepository.findAll());
+        return "operatori/index";
+    }
      
      
 
