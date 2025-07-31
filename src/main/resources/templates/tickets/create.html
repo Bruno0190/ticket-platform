@@ -41,6 +41,15 @@
                 <select th:field="*{category}" class="form-select">
                     <option th:each="cat : ${categorie}" th:value="${cat.id}" th:text="${cat.name}"></option>
                 </select>
+        
+            <!-- campo operatore -->
+            <div class="col-4">
+                <label for="operator" class="form-label">Operatore</label>
+                <select th:field="*{operator}" class="form-select">
+                    <option th:each="op : ${operatori}" th:value="${op.id}" th:text="${op.name}"></option>
+                </select>
+            </div>
+
              </div>
 
              <!-- Submit -->

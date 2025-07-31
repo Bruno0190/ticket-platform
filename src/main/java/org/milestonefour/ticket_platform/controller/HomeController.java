@@ -24,9 +24,10 @@ import org.milestonefour.ticket_platform.model.Ticket.Status;
 @RequestMapping("/")
 public class HomeController {
 
-
     @Autowired
-    private OperatoreRepository categoriaRepository;
+    private TicketRepository ticketRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
     @Autowired
     private OperatoreRepository operatoreRepository;
 
@@ -40,6 +41,8 @@ public class HomeController {
     @GetMapping("/categorie")
     public String indexCategory(Model model) {
         model.addAttribute("categorie", categoriaRepository.findAll());
+
+
         return "categorie/index";
     }
 

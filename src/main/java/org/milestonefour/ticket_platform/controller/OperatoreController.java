@@ -15,8 +15,6 @@ public class OperatoreController{
     @Autowired
     private OperatoreRepository operatoreRepository;
 
-
-
     @GetMapping("")
     public String index(Model model){
         model.addAttribute("operatori", operatoreRepository.findAll());

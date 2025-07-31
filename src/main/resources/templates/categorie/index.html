@@ -13,12 +13,32 @@
 <body>
     <!-- Navbar -->
     <div th:replace="fragments/navbar :: navbar"></div>
+        <h1>Page Category</h1>
         
-        <ul class="list-group">
-            <li class="list-group-item" th:each="categoria : ${categorie}" th:text="${categoria.name}"></li>
-        </ul>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Associated Tickets</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="cat : ${categorie}">
+                    <td th:text="${cat.name}"></td>
+                    <td>
+                    <ul>
+                        <li th:each="tick : ${cat.tickets}">
+                            <span th:text="${tick.title}"></span>
+                        </li>
+                    </ul>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
     
-    <h1>page Category</h1>
+    
     
     <!-- Footer -->
      <div th:replace="fragments/footer :: footer"></div>
