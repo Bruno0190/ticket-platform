@@ -13,6 +13,10 @@
 <body>
     <!-- Navbar -->
     <div th:replace="fragments/navbar :: navbar"></div>
+        
+        <ul class="list-group">
+            <li class="list-group-item" th:each="categoria : ${categorie}" th:text="${categoria.name}"></li>
+        </ul>
     
     <h1>page Category</h1>
     

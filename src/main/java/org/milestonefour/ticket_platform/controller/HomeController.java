@@ -5,6 +5,7 @@ import org.milestonefour.ticket_platform.model.Ticket;
 import org.milestonefour.ticket_platform.model.Operatore.StatoOperatore;
 import org.milestonefour.ticket_platform.model.Operatore;
 import java.util.Optional;
+import org.milestonefour.ticket_platform.repository.CategoriaRepository;
 import org.milestonefour.ticket_platform.repository.OperatoreRepository;
 import org.milestonefour.ticket_platform.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,17 @@ import java.util.List;
 import org.milestonefour.ticket_platform.model.Ticket.Status;
 
 
-
 /*In questo Controller riferito alla Home page, diamo annotazione che l'intera classe gestisca URL che iniziano da "/" */
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
+
     @Autowired
-    private TicketRepository ticketRepository;
+    private OperatoreRepository categoriaRepository;
     @Autowired
     private OperatoreRepository operatoreRepository;
+
 
 
     @GetMapping("")
@@ -36,9 +38,11 @@ public class HomeController {
     }
 
     @GetMapping("/categorie")
-    public String indexCategory() {
+    public String indexCategory(Model model) {
+        model.addAttribute("categorie", categoriaRepository.findAll());
         return "categorie/index";
     }
+
 
     /*Nell'argomento di questo metodo abbiamo la classe Principal. Un oggetto Principal è quello che si crea quando qualcuno fa login in pagina, Cioè l'identità del loggato è un oggetto Principal */
     @GetMapping("/profilo")
