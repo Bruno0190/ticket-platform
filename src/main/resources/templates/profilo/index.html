@@ -46,8 +46,8 @@
                 <td th:text="${ticket.title}"></td>
                 <td th:text="${ticket.status}"></td>
                 <td>
-                    <a th:href="@{'/tickets/show/' + ${ticket.id}}" class="btn btn-sm btn-info">Dettagli</a>
-                    <a th:href="@{'/tickets/edit/' + ${ticket.id}}" class="btn btn-sm btn-secondary">Modifica</a>
+                    <a th:href="@{/tickets/show/{id}(id=${ticket.id})}" class="btn btn-sm btn-info">Dettagli</a>
+                    <a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" class="btn btn-sm btn-secondary">Modifica</a>
                 </td>
             </tr>
         </tbody>
