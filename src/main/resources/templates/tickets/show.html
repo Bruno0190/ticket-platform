@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- Ho aggiunto nel tag html l'attributo che importa il namespace thymeleaf e successivamente quello specialistico per security -->
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +29,7 @@
     <h2>Notes</h2>
     <div>
         <ul>
-            <li th:each="nota : ${note}">                
+            <li th:each="nota : ${note}">            
                 <span th:text="${nota.author}"></span> - 
                 <span th:text="${nota.createdAt}"></span>:
                 <p th:text="${nota.text}"></p>
@@ -37,10 +37,14 @@
 
         </ul>
               
-        <form th:action="@{/tickets/show/{id}/note(id=$ticket.id)}" method = "post" th:object="${nota}">
-            <p th:field="*{text}"></p>
-            <button type="submit" class="btn btn-secondary">Save Note</button>
+        <form th:action="@{/tickets/show/{id}/note(id=${ticket.id})}" method="post" th:object="${nota}">
+            <div class="mb-3">
+                <label for="text" class="form-label">Add note:</label>
+                <textarea th:field="*{text}" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary">Save</button>
         </form>
+
     </div>
 
     <!-- Footer -->
