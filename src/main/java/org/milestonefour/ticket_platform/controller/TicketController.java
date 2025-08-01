@@ -73,28 +73,45 @@ public class TicketController {
         return "redirect:/tickets";
     }
 
+
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model){
-        /*Sostituisco get() subito dopo findById(id) con orElseThrow() così in caso di errore lancia un eccezione */
-        model.addAttribute("ticket", ticketRepository.findById(id).orElseThrow());
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+        
+        model.addAttribute("ticket", ticket);
         model.addAttribute("categorie", categoriaRepository.findAll());
-        model.addAttribute("operatori", operatoreRepository.findAll());
-
+        model.addAttribute("stati", Ticket.Status.values());
+        
         return "/tickets/edit";
     }
 
-     @PostMapping("/edit/{id}")
-     public String update(@Valid @ModelAttribute("ticket") Ticket ticket, BindingResult bindingResult, Model model){
+
+
+    @PostMapping("/edit/{id}")
+    public String update(@PathVariable("id") Long id, @Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
             model.addAttribute("categorie", categoriaRepository.findAll());
-            model.addAttribute("operatori", operatoreRepository.findAll());
+            model.addAttribute("stati", Ticket.Status.values());
             return "/tickets/edit";
         }
 
+        Ticket ticket = ticketRepository.findById(id).orElseThrow();
+
+        // Copia tutti i dati dal form (tranne id)
+        ticket.setTitle(formTicket.getTitle());
+        ticket.setDescription(formTicket.getDescription());
+        ticket.setStatus(formTicket.getStatus());
+        ticket.setCategory(formTicket.getCategory());
+        
+        // ticket.setOperator(formTicket.getOperator());
+
         ticketRepository.save(ticket);
+
         return "redirect:/tickets";
-     }
+    }
+
+
 
     @GetMapping("/show/{id}")
     public String addNote(@PathVariable("id") Long id, Model model) {
