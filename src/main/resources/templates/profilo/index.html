@@ -7,37 +7,37 @@
 <body>
 
 <div class="container mt-4">
-    <h2 class="mb-4">Profilo Operatore</h2>
+    <h2 class="mb-4">Profile Operator</h2>
 
     <div class="mb-3">
-        <p><strong>Nome:</strong> <span th:text="${operatore.name}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${operatore.name}"></span></p>
         <p><strong>Email:</strong> <span th:text="${operatore.email}"></span></p>
-        <p><strong>Stato attuale:</strong> <span th:text="${operatore.statoOperatore}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${operatore.statoOperatore}"></span></p>
     </div>
 
     <form th:action="@{/profilo}" method="post" th:object="${operatore}" class="mb-3">
         <input type="hidden" th:value="${operatore.id}" name="id"/>
         <div class="mb-2">
-            <label class="form-label">Nuovo stato:</label>
+            <label class="form-label">New status:</label>
             <select th:field="*{statoOperatore}" class="form-select">
-                <option value="ACTIVE">Attivo</option>
-                <option value="NO_ACTIVE">Non attivo</option>
+                <option value="ACTIVE">Active</option>
+                <option value="NO_ACTIVE">No active</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Aggiorna</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 
     <div class="text-danger" th:if="${errore}" th:text="${errore}"></div>
     <div class="text-success" th:if="${successo}" th:text="${successo}"></div>
 
-        <h4 class="mt-5">Ticket Assegnati</h4>
+        <h4 class="mt-5">Tickets assigned</h4>
     <table class="table table-striped mt-2">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Titolo</th>
-                <th>Stato</th>
-                <th>Azioni</th>
+                <th>Title</th>
+                <th>Status ticket</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -46,8 +46,8 @@
                 <td th:text="${ticket.title}"></td>
                 <td th:text="${ticket.status}"></td>
                 <td>
-                    <a th:href="@{/tickets/show/{id}(id=${ticket.id})}" class="btn btn-sm btn-info">Dettagli</a>
-                    <a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" class="btn btn-sm btn-secondary">Modifica</a>
+                    <a th:href="@{/tickets/show/{id}(id=${ticket.id})}" class="btn btn-sm btn-info">Details</a>
+                    <a th:href="@{/tickets/edit/{id}(id=${ticket.id})}" class="btn btn-sm btn-secondary">Edit</a>
                 </td>
             </tr>
         </tbody>
