@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -65,35 +66,44 @@ public class HomeController {
 
 
     @PostMapping("/profilo")
-    public String update(@ModelAttribute("operatore") Operatore operatore, Model model){
+    public String update(@RequestParam("statoOperatore") StatoOperatore nuovoStato, Model model, Principal principal) {
 
-        Operatore realOperatore = operatoreRepository.findById(operatore.getId()).get();
+        // Ottengo username utente loggato
+        String username = principal.getName();
 
-        List<Ticket> tickets = realOperatore.getTickets();
+        // Recupero l'oggetto User usando lo username
+        User user = userRepository.findByUsername(username).get();
 
+        // Recupero operatore legato a questo User
+        Operatore operatore = user.getOperatore();
+
+        // Controllo se ci sono ticket attivi
         boolean haTicketAttivi = false;
 
-        for (Ticket tick : tickets) {
-            if (tick.getStatus() == Status.DA_FARE || tick.getStatus() == Status.IN_CORSO) {
+        for (Ticket ticket : operatore.getTickets()) {
+            if (ticket.getStatus() == Status.DA_FARE || ticket.getStatus() == Status.IN_CORSO) {
                 haTicketAttivi = true;
                 break;
             }
         }
 
-        if (haTicketAttivi && operatore.getStatoOperatore() == StatoOperatore.NO_ACTIVE) {
-            model.addAttribute("operatore", realOperatore);
+        // Se vuole disattivarsi ma ha ticket attivi, ritorno un messaggio di errore
+        if (haTicketAttivi && nuovoStato == StatoOperatore.NO_ACTIVE) {
+            model.addAttribute("operatore", operatore);
             model.addAttribute("errore", "Non puoi disattivarti finché hai ticket attivi.");
             return "profilo/index";
         }
 
-        // Se non ha ticket attivi, salvo lo stato scelto
-        realOperatore.setStatoOperatore(operatore.getStatoOperatore());
-        operatoreRepository.save(realOperatore);
+        // Altrimenti aggiorno lo stato
+        operatore.setStatoOperatore(nuovoStato);
+        operatoreRepository.save(operatore);
 
-        model.addAttribute("operatore", realOperatore);
+        // mando conferma di successo
+        model.addAttribute("operatore", operatore);
         model.addAttribute("successo", "Stato aggiornato con successo.");
         return "profilo/index";
-  
     }
+
+
 
 }

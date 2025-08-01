@@ -17,7 +17,7 @@
     </div>
 
     <form th:action="@{/profilo}" method="post" th:object="${operatore}" class="mb-3">
-        <input type="hidden" th:value="${operatore.id}" name="id"/>
+        <input type="hidden" th:field="*{id}"/>
         <div class="mb-2">
             <label class="form-label">New status:</label>
             <select th:field="*{statoOperatore}" class="form-select">
