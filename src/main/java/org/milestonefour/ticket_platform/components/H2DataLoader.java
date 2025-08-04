@@ -1,4 +1,4 @@
-/*package org.milestonefour.ticket_platform.components;
+package org.milestonefour.ticket_platform.components;
 
 import org.milestonefour.ticket_platform.model.User;
 import org.milestonefour.ticket_platform.model.Operatore.StatoOperatore;
@@ -24,7 +24,7 @@ import org.milestonefour.ticket_platform.model.Role;
 import org.milestonefour.ticket_platform.model.Nota;
 import org.milestonefour.ticket_platform.model.Ticket;
 
-//@Component
+@Component
 public class H2DataLoader implements CommandLineRunner {
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -148,5 +148,5 @@ public class H2DataLoader implements CommandLineRunner {
             System.out.println(" - Username: " + u.getUsername());
         }
     }
-}*/
+}
 
