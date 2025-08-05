@@ -15,4 +15,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     List<Ticket> findByOperator(Operatore operator);
 
+    List<Ticket> findByTitleContainingIgnoreCase(String keyword);
+
+
 }

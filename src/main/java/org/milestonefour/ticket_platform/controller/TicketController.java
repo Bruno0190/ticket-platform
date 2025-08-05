@@ -2,6 +2,7 @@ package org.milestonefour.ticket_platform.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import jakarta.validation.Valid;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.milestonefour.ticket_platform.model.Ticket;
 
@@ -19,7 +21,7 @@ import org.milestonefour.ticket_platform.repository.CategoriaRepository;
 import org.milestonefour.ticket_platform.repository.NotaRepository;
 import org.milestonefour.ticket_platform.repository.OperatoreRepository;
 import org.milestonefour.ticket_platform.repository.TicketRepository;
-
+import java.util.List;
 
 
 @Controller
@@ -36,12 +38,28 @@ public class TicketController {
     @Autowired
     private NotaRepository notaRepository;
 
-
+    //GetMapping per visualizzare index tickets e filtrare i titoli al campo
     @GetMapping("")
-    public String index(Model model){
-        model.addAttribute("tickets", ticketRepository.findAll());
+    public String index(@RequestParam(required = false) String keyword, Model model) {
+        List<Ticket> tickets;
+        if (keyword != null && !keyword.isBlank()) {
+            tickets = ticketRepository.findByTitleContainingIgnoreCase(keyword);
+        } else {
+            tickets = ticketRepository.findAll();
+        }
+        model.addAttribute("tickets", tickets);
         return "tickets/index";
     }
+
+    @Transactional
+    @PostMapping("/delete/{id}")
+    public String deleteTicket(@PathVariable("id") Long id) {
+        notaRepository.deleteAllByTicketId(id);
+        ticketRepository.deleteById(id);
+        return "redirect:/tickets";
+    }
+
+
 
     /*Model è una classe di Spring che istanzia oggetti per passarli agli HTML*/
     @GetMapping("/create")

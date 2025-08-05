@@ -27,6 +27,7 @@ public class SecurityConfiguration {
             .requestMatchers("/categorie", "/categorie/**").hasAuthority("ADMIN")
             .requestMatchers("/profilo","/profilo/index").permitAll()
             
+            .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "OPERATOR")
 
             // Homepage accessibile a tutti
             .requestMatchers("/").permitAll()
@@ -35,10 +36,14 @@ public class SecurityConfiguration {
             .anyRequest().authenticated()
         );
         http.formLogin(Customizer.withDefaults())  //login standard
-        .logout(logout -> logout
-            .logoutSuccessUrl("/login?logout")
-            .permitAll()
+            .httpBasic(Customizer.withDefaults())  // Abilita HTTP Basic Auth per Postman sulle API
+            .logout(logout -> logout
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+
+
         );
+        
 
         
         /*Il seguente return monta l'oggetto di sopra con tutti i metodi necessari*/

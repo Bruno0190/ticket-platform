@@ -7,6 +7,7 @@ import java.util.List;
 public interface NotaRepository extends JpaRepository<Nota, Long> {
 
     List<Nota> findAllByTicketId(Long ticketId);
+    void deleteAllByTicketId(Long ticketId);
 
 
 }
