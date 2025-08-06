@@ -16,17 +16,12 @@ public class SecurityConfiguration {
 
     /*Con Bean in questo caso dichiariamo che l'oggetto SecurityFilterChain deve essere creato una volta sola e tenerlo in memoria così da essere pronto all'utilizzo */
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http)
-    /*I metodi usati su oggetti di tipo HttpSecurity lanciano potenziali eccezioni, ecco perchè non ve ne sono di effettivamente dichiarate */
-    throws Exception {
-        /*http.authorizeHttpRequests è un metodo che accetta una lambda (->) che non deve contenere return al suo interno. Utilizzando lambda possiamo poi fare una catena di metodi come si vede. Le lambda sono modi brevi per scrivere metodi senza nome */
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        /*http.authorizeHttpRequests è un metodo che dice letteralmente chi può accedere e a quali URL. Accetta una lambda (->) che non deve contenere return al suo interno. Utilizzando lambda possiamo poi fare una catena di metodi come si vede. Le lambda sono modi brevi per scrivere metodi senza nome */
         http.authorizeHttpRequests(requests -> requests
-            
-            .requestMatchers("/tickets", "/tickets/index", "/tickets/show/**","/tickets/create", "/tickets/edit/**").hasAnyAuthority("ADMIN", "OPERATOR")
-            .requestMatchers("/operatori", "/operatori/**").hasAuthority("ADMIN")
-            .requestMatchers("/categorie", "/categorie/**").hasAuthority("ADMIN")
+            .requestMatchers("/tickets/create","/tickets/edit/**","/categorie", "/categorie/**","/operatori", "/operatori/**").hasAuthority("ADMIN")
             .requestMatchers("/profilo","/profilo/index").permitAll()
-            
+            .requestMatchers("/tickets", "/tickets/index", "/tickets/show/**").hasAnyAuthority("ADMIN", "OPERATOR")
             .requestMatchers("/api/**").hasAnyAuthority("ADMIN", "OPERATOR")
 
             // Homepage accessibile a tutti
@@ -35,6 +30,7 @@ public class SecurityConfiguration {
             // Tutto il resto: solo utenti loggati
             .anyRequest().authenticated()
         );
+        /*Il metodo sottostante inceve serve ad abilitare al login */
         http.formLogin(Customizer.withDefaults())  //login standard
             .httpBasic(Customizer.withDefaults())  // Abilita HTTP Basic Auth per Postman sulle API
             .logout(logout -> logout
@@ -63,7 +59,7 @@ public class SecurityConfiguration {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    /*E infine questo metodo collega userDetailsService e passwordEncoder per fare funzionare il login */
+    /*E infine questo metodo collega userDetailsService e passwordEncoder per fare funzionare il login. Data Access Object Aut..provider è una classe di Spring Security che lavora con dati di database. Un authenticationProvider è l'oggetto che gestisce il login */
     @Bean
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService());

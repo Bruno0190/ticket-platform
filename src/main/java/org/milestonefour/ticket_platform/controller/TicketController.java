@@ -38,7 +38,8 @@ public class TicketController {
     @Autowired
     private NotaRepository notaRepository;
 
-    //GetMapping per visualizzare index tickets e filtrare i titoli al campo
+    //GetMapping per visualizzare index tickets e filtrare i titoli al campo. In un campo ricerca, il form traduce la ricerca come query: /tickets?keyword=qualcosa. Quel keyword noi lo tipiziammo in quanto variabile string.
+
     @GetMapping("")
     public String index(@RequestParam(required = false) String keyword, Model model) {
         List<Ticket> tickets;

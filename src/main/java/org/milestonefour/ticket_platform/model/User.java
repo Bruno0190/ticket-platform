@@ -40,7 +40,7 @@ public class User {
 
     };
 
-    /*Relazioni con altre entità. Qui abbiamo una relazione molti a molti, per cui occorre una tabella ponte creata con JoinTable, battezzata come user_role in cui user_id e di riflesso role_id saranno i collegamenti */
+    /*Relazioni con altre entità. Qui abbiamo una relazione molti a molti, per cui occorre una tabella ponte creata con JoinTable, battezzata come user_role in cui user_id e di riflesso role_id saranno i collegamenti. */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_role",

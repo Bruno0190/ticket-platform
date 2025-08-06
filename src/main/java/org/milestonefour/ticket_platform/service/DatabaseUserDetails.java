@@ -25,7 +25,7 @@ public class DatabaseUserDetails implements UserDetails{
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
-        /*Tra le caratteristiche del costruttore authorities è dato da un HashSet(classe che implementa Set mettendo gli oggetti in coppie chiave-valore.) */
+        /*Tra le caratteristiche del costruttore, authorities è dato da un HashSet(classe che implementa Set mettendo gli oggetti in coppie chiave-valore.) */
         authorities = new HashSet<GrantedAuthority>();
         for(Role role : user.getRoles()) {
             /*SimpleGrantedAuthority è una classe che implementa GrantedAuthority e rappresenta un singolo ruolo  */
@@ -35,7 +35,7 @@ public class DatabaseUserDetails implements UserDetails{
 
     /*Di seguito tutti i metodi di UserDetails che devono obbligatoriamente essere riportati e sovrascritti con Override */
 
-    @Override /*Le Collection sono collezioni astratti di oggetti, possono essere List o Set o Queue. Il punto interrogativo significa "una qualunque classe figlia di GrantedAuthority" */
+    @Override /*Le Collection sono collezioni astratti di oggetti, possono essere List o Set. Il punto interrogativo significa "una qualunque classe figlia di GrantedAuthority" */
     public Collection<? extends GrantedAuthority> getAuthorities() {
         /*Pertanto ciò che viene ritornato è una collezione di oggetti authorities che estendono GrantedAuthority */
         return authorities;

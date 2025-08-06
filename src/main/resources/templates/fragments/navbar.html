@@ -30,6 +30,9 @@
           <a class="nav-link" th:href="@{/profilo}">Profilo</a>
         </li>
       </ul>
+        <form th:action="@{/logout}" method="post" class="d-flex ms-auto">
+            <button type="submit" class="btn btn-link nav-link" >Logout</button>
+        </form>
     </div>
   </div>
 </nav>
