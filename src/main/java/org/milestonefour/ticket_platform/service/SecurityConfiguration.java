@@ -47,19 +47,19 @@ public class SecurityConfiguration {
         
     }
 
-    /*Il seguente metodo usa un istanza della classe DatabaseUserDetailsService in pratica per recuperare l'utente da database*/
+
     @Bean
     DatabaseUserDetailsService userDetailsService(){
         return new DatabaseUserDetailsService();
     }
 
-    /*Quest'altro metodo invece serve a criptare e verificare password tramite lo standard BCrypt */
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    /*E infine questo metodo collega userDetailsService e passwordEncoder per fare funzionare il login. Data Access Object Aut..provider è una classe di Spring Security che lavora con dati di database. Un authenticationProvider è l'oggetto che gestisce il login */
+
     @Bean
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService());
